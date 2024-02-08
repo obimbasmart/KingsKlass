@@ -21,7 +21,6 @@ from api.v1.views import app_views
 from models import storage
 from models.user import User
 from models.order import Order
-from models.measurements import Measurements
 
 
 @app_views.route("/users")
@@ -101,7 +100,7 @@ def create_user_orders(user_id=None, order_id=None):
     """
     user = storage.get(User, user_id)
     if user is None:
-        abort()
+        abort(404)
 
     order_data = request.get_json(silent=True)
     if order_data is None:
@@ -112,15 +111,44 @@ def create_user_orders(user_id=None, order_id=None):
     if "measurements" not in order_data:
         abort(400, "Missing measurements")
 
+    print(type(order_data["measurements"]))
     new_order = Order(product_id=order_data['product_id'],
                       user_id = user_id)
 
-    
-    new_order.measurements = Measurements()
-    [
-        setattr(new_order.measurements, measurement, value)
-        for measurement, value in order_data["measurements"].items()
-    ]
+    new_order.save()
+    order_measurements = order_data["measurements"]
+    for m in order_measurements:
+        new_order.measurements[m] = order_measurements[m]
 
     new_order.save()
     return make_response(jsonify(new_order.to_dict()), 200)
+
+
+
+@app_views.route("/users/<user_id>/measurements", methods=["GET",  "PUT"])
+def get_user_measurements(user_id=None):
+    """get measurments for this user"""
+    user = storage.get(User, user_id)
+    if user is None:
+        abort(404)
+
+    if request.method == "GET":
+        return jsonify(user.measurements)
+    
+    data = request.get_json(silent=True)
+    if data is None:
+        abort(400, "Not a JSON")
+
+    measurements = data.get("measurements")
+    if measurements is None:
+        abort(400, "Missing measurements")
+
+    if not isinstance(measurements, dict):
+        abort(400, "Measurements data must be a dictionary of measurements")
+
+    for m in measurements:
+        user.measurements[m] = measurements[m]
+        
+    user.save()
+    return (jsonify(user.measurements), 200)
+    

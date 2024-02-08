@@ -8,7 +8,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
 from models.category import Category
-from models.measurement import Measurement
 from models.order import Order
 from models.product import Product
 from models.review import Review
@@ -46,7 +45,7 @@ class DBStorage:
 
     def all(self, cls=None):
         """Returns a dictionary of objects currently in database"""
-        all_models = [Category, Product, Review, User, Measurement, Order]
+        all_models = [Category, Product, Review, User, Order]
         if cls is None:
             all_objects = {}
             for klass in all_models:

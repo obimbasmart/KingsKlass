@@ -16,6 +16,7 @@ Attributes:
 from hashlib import md5
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Float, Integer, Boolean
+from models.json_dict import JsonEncodedDict, default_measurement
 
 
 class User(BaseModel, Base):
@@ -28,6 +29,7 @@ class User(BaseModel, Base):
     password = Column(String(1024), nullable=False)
     phone_no = Column(String(128), nullable=True)
     is_admin = Column(Boolean, unique=False, default=False)
+    measurements = Column(JsonEncodedDict, default=default_measurement)
 
 
     def __init__(self, *args, **kwargs):

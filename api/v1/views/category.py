@@ -17,7 +17,7 @@ from models import storage
 from models.category import Category
 from exceptions.validation_exceptions import NonUniqueValueError
 
-@app_views.route("/categories", methods=["GET", "POST"])
+@app_views.route("/categories", methods=["GET"])
 def get_categories():
     """get a list of all Unique categories"""
     categories = storage.all(Category).values()
@@ -33,7 +33,7 @@ def get_create_category(category_name=None):
     if category_name is None:
         abort(404)
 
-    if request.method == "GET":
+    if request.method == "POST":
         try:
             new_category = Category(id=category_name)
             new_category.save()
@@ -64,11 +64,6 @@ def get_create_category(category_name=None):
 
 
     
-    
-    
-
-
-
 @app_views.route("/categories/<category_name>/products")
 def get_product_by_category(category_name):
     """get a list of products by category_name"""

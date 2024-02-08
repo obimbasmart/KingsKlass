@@ -33,6 +33,16 @@ def get_post_order(order_id=None):
     if order is None:
         abort(404)
     return make_response(jsonify(order.to_dict()), 200)
+
+
+@app_views.route("/orders/<order_id>/measurements")
+def get_order_measurements(order_id=None):
+    """get a list of all measurement for this order"""
+    order = storage.get(Order, order_id)
+    if order is None:
+        abort(404)
+
+    return jsonify(order.measurements)
     
 
     

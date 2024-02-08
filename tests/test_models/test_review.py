@@ -12,7 +12,6 @@ from models.user import User
 from tests.test_models.test_base_model import TestBaseModel
 from models.product import Product
 from models.review import Review
-from models.measurement import Measurement
 
 class TestReview(unittest.TestCase):
 

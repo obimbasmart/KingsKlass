@@ -14,7 +14,7 @@ from models.user import User
 from tests.test_models.test_base_model import TestBaseModel
 from models.product import Product
 from models.order import Order
-from models.measurements import Measurements
+import json
 
 class TestOrder(unittest.TestCase):
 
@@ -32,6 +32,7 @@ class TestOrder(unittest.TestCase):
         self.product.save()
 
         self.order = Order(product_id=self.product.id, user_id=self.user.id)
+        print(self.order.measurements)
         self.order.save()
         
     def test_base_attrs(self):
@@ -69,16 +70,8 @@ class TestOrder(unittest.TestCase):
         """---returns a dictionary containing all keys/values of the instance"""
         self.assertIsInstance(self.order.to_dict(), dict)
 
-    def test_measurement_relationship(self):
-        """test: link measuremts to order"""
-        order = Order(product_id=self.product.id, user_id=self.user.id)
-
-        with self.assertRaises(AttributeError) as err:
-            self.order.measurements
-
-        order.measurements = Measurements()
-        order.save()
-        
-        order_from_storage = storage.get(Order, order.id)
-        self.assertIsInstance(order_from_storage.measurements, Measurements)
+    def test_order_measurement(self):
+        """--- test that order.measurements returns a dict of measurments"""
+        self.assertIsInstance(self.order.measurements, dict)
+    
 

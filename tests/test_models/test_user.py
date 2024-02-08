@@ -14,16 +14,22 @@ from tests.test_models.test_base_model import TestBaseModel
 
 class TestUser(unittest.TestCase):
 
+    user = None
+
+    def setUp(self):
+        self.user = User(email=f"test_{datetime.now().microsecond}@gmail.com", password="abcd")
+        self.user.save()
+    
     def test_base_attrs(self):
         """---test that User inherits from BaseModel and has all required base attrs"""
-        TestBaseModel.check_base_attributes(self, User())
+        TestBaseModel.check_base_attributes(self, self.user)
 
     def test_save(self):
         """---save: persist object to db storage"""
 
         n_User_inital = len(storage.all(User))
 
-        u = u = User(email=f"test_{datetime.now().microsecond}@gmail.com", password="abcd")
+        u = User(email=f"test_{datetime.now().microsecond}@gmail.com", password="abcd")
         u.description = "E good"
 
         # before saving
@@ -38,16 +44,18 @@ class TestUser(unittest.TestCase):
 
     def test_delete(self):
         """---delete the current instance from the storage"""
-        u = User(email="test@gmail.com", password="abcd")
-        u.save()
+        self.assertNotEqual(None, storage.get(User, self.user.id))
 
-        self.assertNotEqual(None, storage.get(User, u.id))
-        u.delete()
-        self.assertEqual(None, storage.get(User, u.id))
+        self.user.delete()
+        storage.save()
+        self.assertEqual(None, storage.get(User, self.user.id))
 
     def test_to_dict(self):
         """---returns a dictionary containing all keys/values of the instance"""
-        u = User(email=f"test_{datetime.now().microsecond}@gmail.com", password="abcd")
+        self.assertIsInstance(self.user.to_dict(), dict)
+        self.assertNotIn('password', self.user.to_dict())
 
-        self.assertIsInstance(u.to_dict(), dict)
-        self.assertNotIn('password', u.to_dict())
+    def test_order_measurement(self):
+        """--- test that user.measurements returns a dict of measurments"""
+        self.assertIsInstance(self.user.measurements, dict)
+        self.assertNotEqual(self.user.measurements, {})

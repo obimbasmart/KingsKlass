@@ -6,14 +6,15 @@ This module defines the Order class, an actual order placed by a user
 
 Attributes:
     - product_id (int): The unique identifier of the ordered product.
+    - user_id (string) : Unique identifier of the user who ordered the product
     - price (float): The price of the product.
     - description (str): A brief description of the product.
     - estimated (int): number of days required to get the product ready
 """
 
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Enum, ForeignKey, Table
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, String, Enum, ForeignKey, Table, JSON
+from models.json_dict import JsonEncodedDict, default_measurement
 
 class Order(BaseModel, Base):
     """Order class """
@@ -30,13 +31,15 @@ class Order(BaseModel, Base):
     
     additional_info = Column(String(1024), nullable=True)
 
+    # relationships
+    measurements = Column(JsonEncodedDict, default=default_measurement)
 
-    def to_dict(self):
-        order_dict = super().to_dict()
+    # def to_dict(self):
+    #     order_dict = super().to_dict()
 
-        measurements = order_dict.get("measurements")
+    #     measurements = order_dict.get("measurements")
 
-        if measurements:
-            order_dict["measurements"] = measurements.to_dict()
+    #     if measurements:
+    #         order_dict["measurements"] = measurements.to_dict()
 
-        return order_dict
+    #     return order_dict
