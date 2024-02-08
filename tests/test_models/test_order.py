@@ -32,7 +32,6 @@ class TestOrder(unittest.TestCase):
         self.product.save()
 
         self.order = Order(product_id=self.product.id, user_id=self.user.id)
-        print(self.order.measurements)
         self.order.save()
         
     def test_base_attrs(self):

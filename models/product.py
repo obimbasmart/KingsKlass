@@ -41,6 +41,8 @@ class Product(BaseModel, Base):
 
     def to_dict(self):
         p_dict =  super().to_dict()
-        if p_dict.get("categories"):
-            p_dict['categories'] = [c.to_dict() for c in p_dict['categories']]
+        if self.categories:
+            p_dict['categories'] = [c.to_dict()["id"] for c in self.categories]
+            return p_dict
+        
         return p_dict

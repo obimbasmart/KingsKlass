@@ -32,7 +32,6 @@ def get_post_product():
     if product_data is None:
         abort(400, "Not a JSON")
 
-    print(product_data)
     if "name" not in product_data:
         abort(400, "Missing name")
     if "price" not in product_data:
@@ -54,7 +53,8 @@ def get_post_product():
     
     for id in product_data.get("categories"):
         category = storage.get(Category, id)
-        new_product.categories.append(category)
+        if category is not None:
+            new_product.categories.append(category)
 
         
     new_product.save()
@@ -91,7 +91,6 @@ def get_products_by_category(category_id=None):
     """get all products by a category"""
     category = storage.get(Category, category_id)
 
-    print(category.to_dict())
     if category is None:
         abort(404)
 

@@ -111,7 +111,6 @@ def create_user_orders(user_id=None, order_id=None):
     if "measurements" not in order_data:
         abort(400, "Missing measurements")
 
-    print(type(order_data["measurements"]))
     new_order = Order(product_id=order_data['product_id'],
                       user_id = user_id)
 
@@ -148,7 +147,7 @@ def get_user_measurements(user_id=None):
 
     for m in measurements:
         user.measurements[m] = measurements[m]
-        
+
     user.save()
     return (jsonify(user.measurements), 200)
     
