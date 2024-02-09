@@ -15,7 +15,9 @@ from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
 from models.category import Category
+from api.v1.auth.admin import admin_required
 from exceptions.validation_exceptions import NonUniqueValueError
+
 
 @app_views.route("/categories", methods=["GET"])
 def get_categories():
@@ -27,6 +29,7 @@ def get_categories():
 
 
 @app_views.route("/categories/<category_name>", methods=["POST", "DELETE", "PUT"])
+@admin_required()
 def get_create_category(category_name=None):
     """create or delete a category"""
 
