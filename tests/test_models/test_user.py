@@ -17,7 +17,7 @@ class TestUser(unittest.TestCase):
     user = None
 
     def setUp(self):
-        self.user = User(email=f"test_{datetime.now().microsecond}@gmail.com", password="abcd")
+        self.user = User(email=f"test_{datetime.now().microsecond}@gmail.com", password="abcde")
         self.user.save()
     
     def test_base_attrs(self):
@@ -29,7 +29,7 @@ class TestUser(unittest.TestCase):
 
         n_User_inital = len(storage.all(User))
 
-        u = User(email=f"test_{datetime.now().microsecond}@gmail.com", password="abcd")
+        u = User(email=f"test_{datetime.now().microsecond}@gmail.com", password="abcde")
         u.description = "E good"
 
         # before saving

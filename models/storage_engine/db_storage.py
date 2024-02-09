@@ -98,3 +98,8 @@ class DBStorage:
         instances_dict = self.all(cls)
         clsInstance = instances_dict.get(key)
         return clsInstance
+    
+    def get_user(self, email):
+        """get user by email"""
+        user = self.__session.query(User).filter(User.email == email).first()
+        return user

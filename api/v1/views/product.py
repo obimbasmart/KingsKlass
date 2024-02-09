@@ -18,16 +18,23 @@ from api.v1.views import app_views
 from models import storage
 from models.product import Product
 from models.category import Category
+from flask_jwt_extended import jwt_required
+from api.v1.auth.admin import admin_required
 
-
-@app_views.route("/products", methods=["GET", "POST"])
-def get_post_product():
+@app_views.route("/products")
+def get_product():
     """get a list of all products in storage or
        create a new  product """
     products = storage.all(Product).values()
-    if request.method == "GET":
-        return make_response(jsonify([product.to_dict() for product in products]), 200)
-    
+    return make_response(jsonify([
+        product.to_dict()
+        for product in products]), 200)
+
+
+@app_views.route("/products", methods=["POST"])
+@admin_required()
+def post_product():
+    """post a new product"""
     product_data = request.get_json(silent=True)
     if product_data is None:
         abort(400, "Not a JSON")
@@ -59,7 +66,6 @@ def get_post_product():
         
     new_product.save()
     return make_response(jsonify(new_product.to_dict()), 201)
-
 
 @app_views.route("/products/<product_id>", methods=["GET", "PUT"])
 def get_update_product(product_id):
@@ -98,6 +104,7 @@ def get_products_by_category(category_id=None):
     
 
 @app_views.route("/products/<product_id>", methods=["DELETE"])
+@admin_required()
 def delete_update_product(product_id):
     """delete a product from storage"""
     product = storage.get(Product, product_id)

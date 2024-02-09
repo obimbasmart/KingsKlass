@@ -12,6 +12,7 @@ from models.user import User
 from tests.test_models.test_base_model import TestBaseModel
 from models.product import Product
 from models.review import Review
+from datetime import datetime
 
 class TestReview(unittest.TestCase):
 
@@ -21,7 +22,7 @@ class TestReview(unittest.TestCase):
 
     def setUp(self):
         """---create a new review"""
-        self.user = User(email="test_123@gmail.com", password="abcde")
+        self.user = User(email=f"test_{datetime.now().microsecond}@gmail.com", password="abcde")
         self.product = Product(name='Jocos', price=1234.56,
                      img_url='bbb.png', estimated=4, description="Nice senator")
         

@@ -17,10 +17,12 @@ from flask import jsonify, abort, request, make_response
 from api.v1.views import app_views
 from models import storage
 from models.order import Order
+from flask_jwt_extended import jwt_required
 
 
 @app_views.route("/orders")
 @app_views.route("/orders/<order_id>")
+@jwt_required()
 def get_post_order(order_id=None):
     """get a list of all orders in storage or"""
     

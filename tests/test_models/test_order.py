@@ -15,6 +15,7 @@ from tests.test_models.test_base_model import TestBaseModel
 from models.product import Product
 from models.order import Order
 import json
+from datetime import datetime
 
 class TestOrder(unittest.TestCase):
 
@@ -24,7 +25,7 @@ class TestOrder(unittest.TestCase):
 
     def setUp(self):
         """---create a new order"""
-        self.user = User(email="test_123@gmail.com", password="abcde")
+        self.user = User(email=f"test_{datetime.now().microsecond}@gmail.com", password="abcde")
         self.product = Product(name='Jocos', price=1234.56,
                      img_url='bbb.png', estimated=4, description="Nice senator")
         
