@@ -122,6 +122,9 @@ Communication between the client and backend service occurs via REST API endpoin
 ## Test
 A Comprehensive unit tests have been implemented for all components of the application, covering the model, API, and storage engine. Each component is tested independently to ensure its functionality and integrity. All tests are located in the `/test` folder
 
+## Authors
+1. [Obimba Smart](https://github.com/obimbasmart)
+2. [Akinola Oluwatobi](https://github.com/itsoluwatobby)
 
 ## Contribution
 
