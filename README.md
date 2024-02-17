@@ -65,7 +65,7 @@ DBStorage - # storage engine
     .
 ```
 
-<img style="border-radius: 5px" src="./datagram.png"></img>
+<img style="border-radius: 6px" src="./sqldbm.png"></img>
 
 
 ## API Documentation
