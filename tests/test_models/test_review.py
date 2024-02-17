@@ -24,7 +24,7 @@ class TestReview(unittest.TestCase):
         """---create a new review"""
         self.user = User(email=f"test_{datetime.now().microsecond}@gmail.com", password="abcde")
         self.product = Product(name='Jocos', price=1234.56,
-                     img_url='bbb.png', estimated=4, description="Nice senator")
+                     img_url='https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', estimated=4, description="Nice senator")
         
         self.user.save()
         self.product.save()

@@ -17,6 +17,7 @@ from models.order import Order
 import json
 from datetime import datetime
 
+
 class TestOrder(unittest.TestCase):
 
     product = None
@@ -25,24 +26,25 @@ class TestOrder(unittest.TestCase):
 
     def setUp(self):
         """---create a new order"""
-        self.user = User(email=f"test_{datetime.now().microsecond}@gmail.com", password="abcde")
+        self.user = User(
+            email=f"test_{datetime.now().microsecond}@gmail.com", password="abcde")
         self.product = Product(name='Jocos', price=1234.56,
-                     img_url='bbb.png', estimated=4, description="Nice senator")
-        
+                               img_url='https://images.unsplash.com/photo-1493455198445-863243d88564?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', estimated=4, description="Nice senator")
+
         self.user.save()
         self.product.save()
 
         self.order = Order(product_id=self.product.id, user_id=self.user.id)
         self.order.save()
-        
+
     def test_base_attrs(self):
         """---test that Order inherits from BaseModel and has all required base attrs"""
         TestBaseModel.check_base_attributes(self, self.order)
 
-
         order_from_storage = storage.get(Order, self.order.id)
         self.assertEqual(order_from_storage.order_status, 'PENDING')
-        self.assertEqual(order_from_storage.order_progress, 'AWAITING_COMFIRMATION')
+        self.assertEqual(order_from_storage.order_progress,
+                         'AWAITING_COMFIRMATION')
 
     def test_save(self):
         """"---save: persist object to db storage"""
@@ -73,5 +75,3 @@ class TestOrder(unittest.TestCase):
     def test_order_measurement(self):
         """--- test that order.measurements returns a dict of measurments"""
         self.assertIsInstance(self.order.measurements, dict)
-    
-

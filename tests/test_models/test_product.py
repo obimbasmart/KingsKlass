@@ -27,7 +27,7 @@ class TestProduct(unittest.TestCase):
         """setup for each test"""
         self.product = Product(name='KofuCap 4rm test',
                                price=134.56,
-                               img_url='test_2.png', estimated=4,
+                               img_url='https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', estimated=4,
                                description="Good dress")
         self.product.save()
 
@@ -41,7 +41,7 @@ class TestProduct(unittest.TestCase):
         n_product_inital = len(storage.all(Product))
 
         p1 = Product(name='Senator', price=1234.56,
-                     img_url='bbb.png', estimated=4)
+                     img_url='https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', estimated=4)
         p1.description = "E good"
 
         # before saving
