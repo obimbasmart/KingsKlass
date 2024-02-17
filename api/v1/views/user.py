@@ -12,8 +12,6 @@ Endpoints:
     - GET /users/<user_id>/orders: Retrieve all orders made by from a user by ID.
     - GET /users/<user_id>/orders: Create a new order for this user
     - GET /users/<user_id>/orders/<order_id>: Retrieve a specific order by ID from a specific user by ID.
-    - PUT /order/<id>: Update an existing order by ID.
-    - DELETE /order/<id>: Delete a order by ID.
 """
 
 from flask import jsonify, abort, request, make_response
@@ -21,10 +19,13 @@ from api.v1.views import app_views
 from models import storage
 from models.user import User
 from models.order import Order
+from api.v1.auth.admin import admin_required
+from flask_jwt_extended import jwt_required
 
 
 @app_views.route("/users")
 @app_views.route("/users/<user_id>")
+@admin_required()
 def get_users(user_id=None):
     """get a list of all users in storage or
        get a specific user by ID
@@ -41,34 +42,11 @@ def get_users(user_id=None):
     return make_response(jsonify(user.to_dict()), 200)
 
 
-@app_views.route("/users", methods=["POST"])
-def create_user(user_id=None):
-    """create a new user
-    """
-    user_data = request.get_json(silent=True)
-    if user_data is None:
-        abort(400, "Not a JSON")
-
-    if "email" not in user_data:
-        abort(400, "Missing email")
-    if "password" not in user_data:
-        abort(400, "Missing password")
-    user = User(email=user_data["email"], password=user_data["password"])
-    ignore_attr = ["email", "password"]
-    [
-        setattr(user, key, user_data[key])
-        for key in user_data
-        if key not in ignore_attr
-    ]
-
-    user.save()
-    return make_response(jsonify(user.to_dict()), 201)
-
-
 
 
 @app_views.route("/users/<user_id>/orders")
 @app_views.route("/users/<user_id>/orders/<order_id>")
+@jwt_required()
 def get_user_orders(user_id=None, order_id=None):
     """get a list of all orders made by a user
        or get a specific order from a user
@@ -95,6 +73,7 @@ def get_user_orders(user_id=None, order_id=None):
     
 
 @app_views.route("/users/<user_id>/orders", methods=["POST"])
+@jwt_required()
 def create_user_orders(user_id=None, order_id=None):
     """create a new order for this user
     """
@@ -125,6 +104,7 @@ def create_user_orders(user_id=None, order_id=None):
 
 
 @app_views.route("/users/<user_id>/measurements", methods=["GET",  "PUT"])
+@jwt_required()
 def get_user_measurements(user_id=None):
     """get measurments for this user"""
     user = storage.get(User, user_id)

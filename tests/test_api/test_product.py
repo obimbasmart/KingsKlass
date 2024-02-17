@@ -34,10 +34,6 @@ class TestProductAPI(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        db_access.reset_DataBase()
-        storage.reload()
-
-        # create a new admin user
         cls.admin = User(email=f"admin_test@gmail.com",
                         password="admin_test_pwd", is_admin=True)
         

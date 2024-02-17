@@ -15,7 +15,7 @@ app.url_map.strict_slashes = False
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 # Setup the Flask-JWT-Extended extension
-app.config["JWT_SECRET_KEY"] = "randome secrete kakdkdk"  # Change this!
+app.config["JWT_SECRET_KEY"] = "c179e3d-3629-4071-8cb7-77e30c8cd697"  # Change this!
 jwt = JWTManager(app)
 
 
@@ -35,6 +35,6 @@ app.register_blueprint(auth_blueprint)
 
 
 if __name__ == "__main__":
-    api_host = getenv("KS_API_HOST", default="0.0.0.0")
+    api_host = getenv("KS_API_HOST", "0.0.0.0")
     api_port = getenv("KS_API_PORT", 5000)
     app.run(host=api_host, port=api_port, threaded=True)

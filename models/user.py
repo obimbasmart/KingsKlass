@@ -39,3 +39,9 @@ class User(BaseModel, Base):
         if name == 'password':
             value = md5(value.encode()).hexdigest()
         super().__setattr__(name, value)
+
+
+    def to_dict(self):
+        user_dict = super().to_dict()
+        del user_dict["measurements"]
+        return user_dict

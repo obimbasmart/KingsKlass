@@ -10,7 +10,6 @@ Endpoints:
     - GET /orders/<status>/: Get a list of all otheres of status
     - GET /order/<id>: Retrieve details of a specific order by ID.
     - PUT /order/<id>: Update an existing order by ID.
-    - DELETE /order/<id>: Delete a order by ID.
 """
 
 from flask import jsonify, abort, request, make_response
