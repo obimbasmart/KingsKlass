@@ -2,7 +2,7 @@
 
 This project aims to complement the traditional tailoring experience by developing an innovative online platform for `KingsKlass Designs`. Despite thriving in traditional tailoring, `KingsKlass Design` faces the need for an enhanced online presence to connect with a wider audience. This is a backend implementation of Kingsklass web application
 
-![](./kingsklass_1.png)
+![](./zresources//kingsklass_1.png)
 
 ## Building Kingsklass
 
@@ -29,7 +29,7 @@ and even more...
 
 
 ## Web Infastructure
-![](./web_infastructure.png)
+![](./zresources/web_infastructure.png)
 We employed a straightforward web infrastructure, with separate development and deployment for the frontend and backend. Communication between them occurs via REST API endpoints.
 
 - Backend techs/tools used
@@ -65,7 +65,7 @@ DBStorage - # storage engine
     .
 ```
 
-<img style="border-radius: 6px" src="./sqldbm.png"></img>
+<img style="border-radius: 6px" src="./zresources/datagram.png"></img>
 
 
 ## API Documentation
