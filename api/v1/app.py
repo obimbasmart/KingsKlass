@@ -8,11 +8,14 @@ from api.v1.auth import auth_blueprint
 from os import getenv
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
+from datetime import timedelta
 
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
-CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)  # Set default expiration to 1 hour
+# CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
+CORS(app)
 
 # Setup the Flask-JWT-Extended extension
 app.config["JWT_SECRET_KEY"] = "c179e3d-3629-4071-8cb7-77e30c8cd697"  # Change this!

@@ -25,7 +25,7 @@ from flask_jwt_extended import jwt_required
 
 @app_views.route("/users")
 @app_views.route("/users/<user_id>")
-@admin_required()
+@jwt_required()
 def get_users(user_id=None):
     """get a list of all users in storage or
        get a specific user by ID
