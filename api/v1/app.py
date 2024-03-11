@@ -33,6 +33,13 @@ def close_connection(self):
     """close database storage session"""
     storage.close()
 
+@app.teardown_request
+def session_clear(exception=None):
+    """rollback DB session on rollback error Exception"""
+    storage.close()
+    if exception and storage.__Session.is_active:
+        storage.__Session.rollback()
+
 app.register_blueprint(app_views)
 app.register_blueprint(auth_blueprint)
 
