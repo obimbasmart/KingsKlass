@@ -73,7 +73,7 @@ class TestProduct(unittest.TestCase):
     def test_review_relationship(self):
         """---check if product.reviews returns a list of reviews"""
 
-        u1 = User(email="test_1@gmail.com", password="abcde")
+        u1 = User(email="test_1@gmail.com", password="abcde", username="Gechy")
         r1 = Review(product_id=self.product.id, user_id=u1.id,
                     comment="Good clothe", rating=4)
         u1.save()

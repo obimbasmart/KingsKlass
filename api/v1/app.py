@@ -13,12 +13,14 @@ from datetime import timedelta
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)  # Set default expiration to 1 hour
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(
+    hours=1)  # Set default expiration to 1 hour
 # CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 CORS(app)
 
 # Setup the Flask-JWT-Extended extension
-app.config["JWT_SECRET_KEY"] = "c179e3d-3629-4071-8cb7-77e30c8cd697"  # Change this!
+# Change this!
+app.config["JWT_SECRET_KEY"] = "c179e3d-3629-4071-8cb7-77e30c8cd697"
 jwt = JWTManager(app)
 
 
@@ -33,12 +35,14 @@ def close_connection(self):
     """close database storage session"""
     storage.close()
 
+
 @app.teardown_request
 def session_clear(exception=None):
     """rollback DB session on rollback error Exception"""
     storage.close()
-    if exception and storage.__Session.is_active:
-        storage.__Session.rollback()
+    if exception and storage.session.is_active:
+        storage.session.rollback()
+
 
 app.register_blueprint(app_views)
 app.register_blueprint(auth_blueprint)

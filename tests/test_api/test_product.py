@@ -35,11 +35,11 @@ class TestProductAPI(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.admin = User(email=f"admin_test@gmail.com",
-                        password="admin_test_pwd", is_admin=True)
+                        password="admin_test_pwd", is_admin=True, username="Nneoma")
         
         # create a normal user
         cls.user = User(email=f"user_test@gmail.com",
-                        password="user_test_pwd", is_admin=False)
+                        password="user_test_pwd", is_admin=False, username="Void")
         
         cls.user.save()
         cls.admin.save()

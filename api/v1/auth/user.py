@@ -44,13 +44,19 @@ def create_user(user_id=None):
         abort(400, "Missing email")
     if "password" not in user_data:
         abort(400, "Missing password")
+    if "username" not in user_data:
+        abort(400, "Missing username")
 
     user = storage.get_user(user_data["email"])
     if user is not None:
         abort(409, "User already exist")
 
-    user = User(email=user_data["email"], password=user_data["password"])
-    ignore_attr = ["email", "password"]
+    user = User(
+        email=user_data["email"],
+        password=user_data["password"],
+        username=user_data["username"])
+    
+    ignore_attr = ["email", "password", "username"]
     [
         setattr(user, key, user_data[key])
         for key in user_data
